@@ -1,0 +1,77 @@
+clear
+add_choice='Y'
+while [ "$add_choice" = "Y" -o "$add_choice" = "y" ]
+do 
+clear
+tput cup 4 10
+echo -n " Enter employee code whose PAYSLIP you want to view : "
+read emp_code
+if [ ` grep "^$emp_code" EMP_DBF | cut -d":" -f1 ` ]
+then 
+ clear
+ tput cup 5 10
+ echo -n " Is employee eligible for any sort of extra allowance :"
+ read extra_allo_key
+ if [ "$extra_allo_key" = "y" -o "$extra_allo_key" = "Y" ]
+ then 
+   echo -n " Enter extra allowance amount :"
+   read extra_allowance_amount 
+ else
+   extra_allowance_amount=0
+ fi
+ clear
+ tput cup 2 25
+ echo KN MISHRA PRIVATE LIMITED - PAYSLIP
+ tput cup 5 8
+ echo Employee Code: $emp_code
+ emp_name=` grep "^$emp_code" EMP_DBF | cut -d":" -f2 `
+ tput cup 5 34
+ echo Employee Name: $emp_name
+ tput cup 7 25
+ echo INCOME
+ basic_salary=` grep "^$emp_code" EMP_DBF | cut -d":" -f5 `
+ tput cup 10 12
+ echo BASIC SALARY : $basic_salary
+ hra=$(echo "scale=2; 0.30 * $basic_salary" | bc)
+ tput cup 11 12
+ echo HRA : $hra
+
+ da=$(echo "scale=2; 0.80 * $basic_salary" | bc )
+ tput cup 12 12
+ echo DA : $da
+ cca=$(echo "scale=2; 300 * 1 " | bc )
+
+ tput cup 13 12
+ echo CCA : $cca
+ tput cup 14 12
+ echo  EXTRA ALLOWANCE : $extra_allowance_amount
+ TOTAL_INCOME=$(echo "scale=2; $basic_salary + $hra + $da + $cca + $extra_allowance_amount " | bc )
+ tput cup 16 10
+ echo "______________________________________________________________________________________"
+ tput cup 18 10
+ echo TOTAL INCOME : $TOTAL_INCOME
+ tput cup 7 45
+ echo DEDUCTIONS
+ prof_tax=200
+ tput cup 10 40
+ echo PROFESSIONAL TAX : $prof_tax
+ pf=$(echo "scale=2; 0.12 * ( $basic_salary + $da ) " | bc )
+ tput cup 11 40
+ echo PROVIDENT FUND : $pf
+ TOTAL_DEDUCTIONS=$(echo "scale=2; $prof_tax + $pf " | bc )
+ tput cup 18 40 
+ echo TOTAL DEDUCTIONS : $TOTAL_DEDUCTIONS
+ NET_SALARY=$(echo "scale=2; $TOTAL_INCOME - $TOTAL_DEDUCTIONS " | bc )
+ TAKE_HOME_SALARY=$(echo "scale=2; $TOTAL_INCOME - $TOTAL_DEDUCTIONS " | bc )
+ tput cup 20 25
+ echo TAKE HOME SALARY: $TAKE_HOME_SALARY
+else
+ echo EMPLOYEE CODE DOES NOT EXIST
+fi
+tput cup 22 10
+echo -n "Do you wish to view another Employee Payslip : (y/n)? "
+read add_choice
+done
+sh Emp_File_mgmt
+
+

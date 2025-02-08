@@ -1,0 +1,38 @@
+clear 
+view_choice='Y'
+while [ "$view_choice" = "y" -o "$view_choice" = "Y" ]
+do
+clear 
+tput cup 2 10
+echo -n " Enter code of the employee whose details you want to view : "
+read emp_code
+if [ ` grep "^$emp_code" EMP_DBF ` ]
+then
+ tput cup 5 10
+ echo EMPLOYEE DETAILS
+ tput cup 5 10
+ emp_code=` grep "^$emp_code" EMP_DBF | cut -d":" -f1 `
+ emp_name=` grep "^$emp_code" EMP_DBF | cut -d":" -f2 `
+ emp_desg=` grep "^$emp_code" EMP_DBF | cut -d":" -f3 `
+ emp_dept=` grep "^$emp_code" EMP_DBF | cut -d":" -f4 `
+ emp_sal=`  grep "^$emp_code" EMP_DBF | cut -d":" -f5 `
+ tput cup 7 10
+ echo " Employee Code : $emp_code "
+ tput cup 9 10
+ echo " Employee Name : $emp_name "
+ tput cup 11 10
+ echo " Employee Designation : $emp_desg "
+ tput cup 13 10
+ echo " Employee Department : $emp_dept "
+ tput cup 15 10
+ echo " Employee Salary : $emp_sal "
+
+else
+ tput cup 6 10
+ echo -n "Employee with code $emp_code does not exist"
+fi
+ tput cup 18 10
+ echo -n " Do you want to view another employee details(Y/N) : "
+ read view_choice
+done
+sh Emp_File_mgmt

@@ -1,0 +1,28 @@
+clear
+del_choice='Y'
+while [ "$del_choice" = "y" -o "$del_choice" = "Y" ]
+do 
+if [ ! -f EMP_DBF ]
+then 
+  tput cup 5 10
+  echo NO RECORD EXISTS 
+  tput cup 7 10 
+  echo -n Press ENTER key to continue....
+  read key
+  sh Emp_File_mgmt
+else
+tput cup 2 20
+echo MENU FOR DELETING EMPLOYEE RECORD
+tput cup 5 10
+echo -n "Enter employee code which you want to delete :"
+read emp_code
+grep -v "^$emp_code" EMP_DBF > del_temp
+mv del_temp EMP_DBF
+tput cup 8 10
+echo Record successfully deleted....
+tput cup 11 10
+echo -n "Do you want to continue (Y/N) :"
+read del_choice
+fi 
+done
+sh Emp_File_mgmt

@@ -1,0 +1,46 @@
+clear
+tput cup 2 20
+echo MENU FOR MODIFYING EMPLOYEE RECORD
+tput cup 3 10
+echo -n " Enter employee code which you want to modify : "
+read emp_code
+clear
+emp_code=` grep "^$emp_code" EMP_DBF | cut -d":" -f1 `
+emp_name=` grep "^$emp_code" EMP_DBF | cut -d":" -f2 `
+echo -n " Do you want to modify Designation(y/n) : "
+read desg_choice
+if [ "$desg_choice" = "y" -o "$desg_choice" = "Y" ]
+then
+  tput cup 5 10
+  echo -n " Enter the new designation : "
+  read new_desg
+else
+new_desg=` grep "^$emp_code" EMP_DBF | cut -d":" -f3 `
+fi
+tput cup 7 10
+echo -n " Do you want to modify Department(y/n) : "
+read dept_choice
+if [ "$dept_choice" = "y" -o "$dept_choice" = "Y" ]
+then
+  tput cup 8 10
+  echo -n " Enter the new department : "
+  read new_dept
+else
+new_dept=` grep "^$emp_code" EMP_DBF | cut -d":" -f4 `
+fi
+echo -n " Do you want to modify Salary(y/n) : "
+read salary_choice
+if [ "$salary_choice" = "y" -o "$salary_choice" = "Y" ]
+then
+  tput cup 10 10
+  echo -n " Enter the new Salary : "
+  read new_salary
+else
+new_salary=` grep "^$emp_code" EMP_DBF | cut -d":" -f5 `
+fi
+grep -v "^$emp_code" EMP_DBF > MODIFY_DEL
+mv MODIFY_DEL EMP_DBF
+echo "$emp_code:$emp_name:$new_desg:$new_dept:$new_salary" >> EMP_DBF
+sort -t":" EMP_DBF > TEMP
+mv TEMP EMP_DBF
+sh Emp_File_mgmt

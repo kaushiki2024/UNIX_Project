@@ -1,0 +1,21 @@
+clear
+tput cup 2 20
+echo MINI PROJECT ON
+tput cup 5 10
+echo EMPLOYEE PAYROLL MANAGEMENT SYSTEM
+tput cup 8 10
+echo Developed By........
+tput cup 10 10
+echo 1.Kaushiki Mishra
+tput cup 11 10
+echo 2.Nidhi Mishra
+tput cup 14 10
+echo Guided by....
+tput cup 15 15
+tput blink
+echo Dr.N.Guruprasad
+tput sgr0
+tput cup 17 10
+echo Press ENTER KEY to continue......
+read key
+sh MAIN_MENU

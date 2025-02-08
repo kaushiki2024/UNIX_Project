@@ -1,0 +1,23 @@
+clear 
+tput cup 2 20
+echo EMPLOYEE FILE MANAGEMENT SYSTEM
+tput cup 5 10
+echo 1. Add an employee
+tput cup 7 10
+echo 2. Delete an employee
+tput cup 9 10
+echo 3. View an employee
+tput cup 11 10
+echo 4. Modify 
+tput cup 13 10
+echo 5. Return to previous menu
+tput cup 17 10
+echo -n " Enter your choice : "
+read mgmt_choice
+case $mgmt_choice in
+     1) sh Add_record ;;
+     2) sh Del_record ;;
+     3) sh View_record ;;
+     4) sh modify ;;
+     5) sh MAIN_MENU
+esac

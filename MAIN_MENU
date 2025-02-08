@@ -1,0 +1,19 @@
+clear
+tput cup 2 20
+echo EMPLOYEE PAYROLL MANAGEMENT SYSTEM 
+tput cup 5 20
+echo PROJECT MAIN MENU
+tput cup 8 10
+echo 1. FILE MANAGEMENT 
+tput cup 10 10
+echo 2. PAYROLL MANAGEMENT 
+tput cup 12 10
+echo 3. Quit
+tput cup 14 10
+echo -n "Enter your choice : "
+read main_menu_choice
+case $main_menu_choice in
+     1) sh Emp_File_mgmt ;;
+     2) sh Emp_payroll  ;;
+     3) exit
+esac
